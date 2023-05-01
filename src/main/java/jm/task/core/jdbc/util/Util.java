@@ -7,6 +7,9 @@ import org.hibernate.cfg.Configuration;
 import org.hibernate.cfg.Environment;
 import org.hibernate.service.ServiceRegistry;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.util.Properties;
 
 
@@ -41,38 +44,37 @@ private static SessionFactory sessionFactory;
                 System.out.println("База данных подключна");
             } catch (Exception e) {
                 e.printStackTrace();
-            } finally {
-                sessionFactory.close();
-                System.out.println("База данных отключена");
-            }
+            } //finally {
+   //             sessionFactory.close();
+   //             System.out.println("База данных отключена");
+   //         }
         }
         return sessionFactory;
     }
 
+
+
+
+
+    private static final String URL = "jdbc:mysql://localhost:3306/preproject";
+    private static final String USERNAME = "root";
+    private static final String PASSWORD = "йцукен80";
+
+    public static Connection getconnection() {
+              Connection connection = null;
+        try {
+             connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+            System.out.println("Connection OK");
+
+        } catch (SQLException e) {
+            System.out.println(e);
+            throw new RuntimeException(e);
+
+        }
+        return connection;
+        }
+        public static void slose () throws SQLException {
+        getconnection().close();
+            System.out.println("Connection close");
+        }
 }
-
-
-
-//    private static final String URL = "jdbc:mysql://localhost:3306/preproject";
-//    private static final String USERNAME = "root";
-//    private static final String PASSWORD = "йцукен80";
-//
-//    public static Connection getconnection() {
-//              Connection connection = null;
-//        try {
-//             connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
-//            System.out.println("Connection OK");
-//
-//        } catch (SQLException e) {
-//            System.out.println(e);
-//            throw new RuntimeException(e);
-//
-//        }
-//        return connection;
-//        }
-//        public static void slose () throws SQLException {
-//        getconnection().close();
-//            System.out.println("Connection close");
-//        }
-//    }
-//
