@@ -22,31 +22,31 @@ public class UserDaoHibernateImpl implements UserDao {
 
     @Override
     public void createUsersTable() {
-  //      Transaction transaction = null;
+        //      Transaction transaction = null;
         try (Session session = Util.getSessionFactory().openSession();) {
-        transaction = session.beginTransaction();
+            transaction = session.beginTransaction();
 
-        session.createSQLQuery("CREATE TABLE IF NOT EXISTS users2 " +
-                "(id BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY, " +
-                "name VARCHAR(50) NOT NULL, lastName VARCHAR(50) NOT NULL, " +
-                "age TINYINT NOT NULL)").executeUpdate();
-        transaction.commit();
-        session.close();
-    } catch (Exception e) {
-        if (transaction != null) {
-            transaction.rollback();
-        }
+            session.createSQLQuery("CREATE TABLE IF NOT EXISTS users2 " +
+                    "(id BIGINT NOT NULL AUTO_INCREMENT PRIMARY KEY, " +
+                    "name VARCHAR(50) NOT NULL, lastName VARCHAR(50) NOT NULL, " +
+                    "age TINYINT NOT NULL)").executeUpdate();
+            transaction.commit();
+            session.close();
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
         }
     }
     @Override
     public void dropUsersTable() {
- //       Transaction transaction = null;
+        //       Transaction transaction = null;
         try (Session session = Util.getSessionFactory().openSession();) {
-        transaction = session.beginTransaction();
-        session.createSQLQuery("DROP TABLE IF EXISTS users2").executeUpdate();
-        transaction.commit();
-        session.close();
-    } catch (Exception e) {
+            transaction = session.beginTransaction();
+            session.createSQLQuery("DROP TABLE IF EXISTS users2").executeUpdate();
+            transaction.commit();
+            session.close();
+        } catch (Exception e) {
             if (transaction != null) {
                 transaction.rollback();
             }
@@ -55,11 +55,17 @@ public class UserDaoHibernateImpl implements UserDao {
 
     @Override
     public void saveUser(String name, String lastName, byte age) {
-        Session session = Util.getSessionFactory().getCurrentSession();
-        session.beginTransaction();
-        User user = new User(name,lastName,age);
-        session.save(user);
-        session.getTransaction().commit();
+
+        try (Session session = Util.getSessionFactory().getCurrentSession();){
+            transaction = session.beginTransaction();
+            User user = new User(name, lastName, age);
+            session.save(user);
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+        }
     }
 
     @Override

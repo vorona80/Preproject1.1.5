@@ -14,28 +14,21 @@ import java.util.Properties;
 
 
 public class Util {
-private static SessionFactory sessionFactory;
+    private static SessionFactory sessionFactory;
     public static SessionFactory getSessionFactory() {
         if (sessionFactory == null) {
             try {
                 Configuration configuration = new Configuration();
-
-                // Hibernate settings equivalent to hibernate.cfg.xml's properties
                 Properties settings = new Properties();
-   //             settings.put(Environment.DRIVER, "com.mysql.cj.jdbc.Driver");
                 settings.put(Environment.URL, "jdbc:mysql://localhost:3306/hibernate?useSSL=false");
                 settings.put(Environment.USER, "root");
                 settings.put(Environment.PASS, "йцукен80");
                 settings.put(Environment.DIALECT, "org.hibernate.dialect.MySQL5Dialect");
-
                 settings.put(Environment.SHOW_SQL, "true");
-
                 settings.put(Environment.CURRENT_SESSION_CONTEXT_CLASS, "thread");
-
                 settings.put(Environment.HBM2DDL_AUTO, "");
-
                 configuration.setProperties(settings)
-                                .addAnnotatedClass(User.class);
+                        .addAnnotatedClass(User.class);
 
                 ServiceRegistry serviceRegistry = new StandardServiceRegistryBuilder()
                         .applySettings(configuration.getProperties()).build();
@@ -44,15 +37,10 @@ private static SessionFactory sessionFactory;
                 System.out.println("База данных подключна");
             } catch (Exception e) {
                 e.printStackTrace();
-            } //finally {
-   //             sessionFactory.close();
-   //             System.out.println("База данных отключена");
-   //         }
+            }
         }
         return sessionFactory;
     }
-
-
 
 
 
@@ -61,9 +49,9 @@ private static SessionFactory sessionFactory;
     private static final String PASSWORD = "йцукен80";
 
     public static Connection getconnection() {
-              Connection connection = null;
+        Connection connection = null;
         try {
-             connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
+            connection = DriverManager.getConnection(URL, USERNAME, PASSWORD);
             System.out.println("Connection OK");
 
         } catch (SQLException e) {
@@ -72,9 +60,9 @@ private static SessionFactory sessionFactory;
 
         }
         return connection;
-        }
-        public static void slose () throws SQLException {
+    }
+    public static void slose () throws SQLException {
         getconnection().close();
-            System.out.println("Connection close");
-        }
+        System.out.println("Connection close");
+    }
 }

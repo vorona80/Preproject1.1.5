@@ -12,16 +12,6 @@ import java.sql.SQLException;
 
 public class Main {
     public static void main(String[] args) throws SQLException {
-     //   Util.getconnection(); //проверка подключения к базе данны
-//        UserDaoHibernateImpl userDaoHibernate = new UserDaoHibernateImpl();
-//        userDaoHibernate.saveUser("Andrei", "Voronov", (byte)35);
-//        userDaoHibernate.createUsersTable();
-//        userDaoHibernate.dropUsersTable();
-//        userDaoHibernate.cleanUsersTable();
-//        userDaoHibernate.removeUserById(5);
-//        System.out.println(userDaoHibernate.getAllUsers());
-
-
         UserServiceImpl userService = new UserServiceImpl();
         userService.createUsersTable();
         userService.saveUser("Name1", "LastName1", (byte) 20);
@@ -35,8 +25,5 @@ public class Main {
         System.out.println(userService.getAllUsers());
         userService.cleanUsersTable();
         userService.dropUsersTable();
-//    //    userDaoJDBC.removeUserById(3);
-//        Util.slose();
-
     }
 }
